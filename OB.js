@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const sections = {
-  "Frontend": ["React", "Next.js", "Tailwind", "CSS", "HTML"],
-  "Backend": ["Node.js", "Express", "MongoDB", "PostgreSQL", "Django"],
-  "Programming": ["JavaScript", "Python", "C++", "Java", "Go"],
-  "DevOps": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
+  "Attitude": ["React", "Next.js", "Tailwind", "CSS", "HTML"],
+  "Stress Management": ["Node.js", "Express", "MongoDB", "PostgreSQL", "Django"],
+  "Personality": ["JavaScript", "Python", "C++", "Java", "Go"],
+  "Group Dynamics": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
 };
 
 const sectionNames = Object.keys(sections);
