@@ -9,6 +9,8 @@ const sections = {
   "DevOps": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
 };
 
+const sectionNames = Object.keys(sections);
+
 const getRandomTile = (section) => {
   const words = sections[section] || [];
   return words[Math.floor(Math.random() * words.length)];
@@ -17,6 +19,17 @@ const getRandomTile = (section) => {
 export default function RandomTiles() {
   const [tiles, setTiles] = useState([]);
   const [selectedSection, setSelectedSection] = useState(null);
+  const [spinning, setSpinning] = useState(false);
+
+  const spinWheel = () => {
+    setSpinning(true);
+    setTimeout(() => {
+      const randomSection = sectionNames[Math.floor(Math.random() * sectionNames.length)];
+      setSelectedSection(randomSection);
+      setTiles([]);
+      setSpinning(false);
+    }, 2000);
+  };
 
   const drawTile = () => {
     if (selectedSection && tiles.length < 6) {
@@ -26,20 +39,16 @@ export default function RandomTiles() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="flex gap-4 mb-4">
-        {Object.keys(sections).map((section) => (
-          <Button
-            key={section}
-            onClick={() => {
-              setSelectedSection(section);
-              setTiles([]);
-            }}
-            className={`px-4 py-2 ${selectedSection === section ? "bg-blue-700" : "bg-blue-500 hover:bg-blue-600"}`}
-          >
-            {section}
-          </Button>
-        ))}
-      </div>
+      <motion.div
+        className="w-32 h-32 flex items-center justify-center text-xl font-bold bg-blue-600 rounded-full shadow-lg mb-4"
+        animate={{ rotate: spinning ? 360 : 0 }}
+        transition={{ duration: 2, ease: "easeInOut" }}
+      >
+        {spinning ? "Spinning..." : selectedSection || "Spin Wheel"}
+      </motion.div>
+      <Button onClick={spinWheel} className="mb-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
+        {spinning ? "Spinning..." : "Spin to Select Section"}
+      </Button>
       <div className="flex gap-4 flex-wrap max-w-screen-md justify-center">
         {tiles.map((tile, index) => (
           <motion.div
@@ -63,3 +72,4 @@ export default function RandomTiles() {
     </div>
   );
 }
+
