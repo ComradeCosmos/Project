@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
 const sections = {
-  "Attitude": ["React", "Next.js", "Tailwind", "CSS", "HTML"],
-  "Stress Management": ["Node.js", "Express", "MongoDB", "PostgreSQL", "Django"],
-  "Personality": ["JavaScript", "Python", "C++", "Java", "Go"],
-  "Group Dynamics": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
+  "Frontend": ["React", "Next.js", "Tailwind", "CSS", "HTML"],
+  "Backend": ["Node.js", "Express", "MongoDB", "PostgreSQL", "Django"],
+  "Programming": ["JavaScript", "Python", "C++", "Java", "Go"],
+  "DevOps": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
 };
 
 const sectionNames = Object.keys(sections);
@@ -48,21 +48,21 @@ export default function RandomTiles() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="relative w-64 h-64 flex items-center justify-center">
-        <div className="w-full h-full bg-blue-600 rounded-full flex items-center justify-center text-xl font-bold shadow-lg relative">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white font-bold">
+      <div className="relative w-64 h-64 flex items-center justify-center"> {/* Increased wheel size */}
+        <div className="w-full h-full bg-white text-black rounded-full flex items-center justify-center text-xl font-bold shadow-lg relative">
           {sectionNames.map((section, index) => (
             <div
               key={index}
-              className="absolute w-full text-white font-bold text-center"
-              style={{ transform: `rotate(${index * (360 / sectionNames.length)}deg) translateY(-80px)` }}
+              className="absolute w-full text-black font-bold text-center"
+              style={{ transform: `rotate(${index * (360 / sectionNames.length)}deg) translateY(-100px)` }}
             >
               {section}
             </div>
           ))}
         </div>
         <motion.div
-          className="absolute w-12 h-12 bg-red-500 rounded-full flex items-center justify-center"
+          className="absolute w-12 h-12 bg-black rounded-full flex items-center justify-center"
           animate={{ rotate: spinning ? arrowRotation : arrowRotation }}
           transition={{ duration: 3, ease: "easeInOut" }}
         >
@@ -70,7 +70,7 @@ export default function RandomTiles() {
         </motion.div>
       </div>
       {!sectionSelected && (
-        <Button onClick={spinWheel} className="mt-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
+        <Button onClick={spinWheel} className="mt-4 bg-white text-black hover:bg-gray-300" disabled={spinning}>
           {spinning ? "Spinning..." : "Spin to Select Section"}
         </Button>
       )}
@@ -81,7 +81,7 @@ export default function RandomTiles() {
             initial={{ opacity: 0, rotateY: 90 }}
             animate={{ opacity: 1, rotateY: 0 }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="w-32 h-48 flex items-center justify-center text-2xl font-bold bg-gray-800 rounded-lg shadow-lg"
+            className="w-32 h-48 flex items-center justify-center text-2xl font-bold bg-white text-black rounded-lg shadow-lg border-4 border-black" /* Cards Against Humanity theme */
           >
             {tile}
           </motion.div>
@@ -89,7 +89,7 @@ export default function RandomTiles() {
       </div>
       <Button
         onClick={drawTile}
-        className="mt-6 bg-blue-500 hover:bg-blue-600"
+        className="mt-6 bg-white text-black hover:bg-gray-300"
         disabled={!selectedSection || tiles.length >= 6}
       >
         {tiles.length >= 6 ? "Limit Reached" : "Draw Tile"}
