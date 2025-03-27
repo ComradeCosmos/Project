@@ -49,7 +49,7 @@ export default function RandomTiles() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <div className="relative w-48 h-48 flex items-center justify-center">
+      <div className="relative w-64 h-64 flex items-center justify-center">
         <div className="w-full h-full bg-blue-600 rounded-full flex items-center justify-center text-xl font-bold shadow-lg relative">
           {sectionNames.map((section, index) => (
             <div
@@ -81,7 +81,7 @@ export default function RandomTiles() {
             initial={{ opacity: 0, rotateY: 90 }}
             animate={{ opacity: 1, rotateY: 0 }}
             transition={{ duration: 0.5, delay: index * 0.2 }}
-            className="w-24 h-24 flex items-center justify-center text-2xl font-bold bg-gray-800 rounded-lg shadow-lg"
+            className="w-32 h-48 flex items-center justify-center text-2xl font-bold bg-gray-800 rounded-lg shadow-lg"
           >
             {tile}
           </motion.div>
