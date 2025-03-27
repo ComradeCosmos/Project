@@ -20,6 +20,7 @@ export default function RandomTiles() {
   const [tiles, setTiles] = useState([]);
   const [selectedSection, setSelectedSection] = useState(null);
   const [spinning, setSpinning] = useState(false);
+  const [sectionSelected, setSectionSelected] = useState(false);
 
   const spinWheel = () => {
     setSpinning(true);
@@ -28,12 +29,16 @@ export default function RandomTiles() {
       setSelectedSection(randomSection);
       setTiles([]);
       setSpinning(false);
+      setSectionSelected(true);
     }, 2000);
   };
 
   const drawTile = () => {
     if (selectedSection && tiles.length < 6) {
       setTiles((prevTiles) => [...prevTiles, getRandomTile(selectedSection)]);
+    }
+    if (tiles.length + 1 >= 6) {
+      setSectionSelected(false);
     }
   };
 
@@ -46,9 +51,11 @@ export default function RandomTiles() {
       >
         {spinning ? "Spinning..." : selectedSection || "Spin Wheel"}
       </motion.div>
-      <Button onClick={spinWheel} className="mb-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
-        {spinning ? "Spinning..." : "Spin to Select Section"}
-      </Button>
+      {!sectionSelected && (
+        <Button onClick={spinWheel} className="mb-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
+          {spinning ? "Spinning..." : "Spin to Select Section"}
+        </Button>
+      )}
       <div className="flex gap-4 flex-wrap max-w-screen-md justify-center">
         {tiles.map((tile, index) => (
           <motion.div
@@ -72,4 +79,5 @@ export default function RandomTiles() {
     </div>
   );
 }
+
 
