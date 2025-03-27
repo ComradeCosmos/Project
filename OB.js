@@ -2,19 +2,44 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-const getRandomTile = () => Math.floor(Math.random() * 100) + 1;
+const sections = {
+  "Frontend": ["React", "Next.js", "Tailwind", "CSS", "HTML"],
+  "Backend": ["Node.js", "Express", "MongoDB", "PostgreSQL", "Django"],
+  "Programming": ["JavaScript", "Python", "C++", "Java", "Go"],
+  "DevOps": ["Docker", "Kubernetes", "CI/CD", "AWS", "Terraform"]
+};
+
+const getRandomTile = (section) => {
+  const words = sections[section] || [];
+  return words[Math.floor(Math.random() * words.length)];
+};
 
 export default function RandomTiles() {
   const [tiles, setTiles] = useState([]);
+  const [selectedSection, setSelectedSection] = useState(null);
 
   const drawTile = () => {
-    if (tiles.length < 6) {
-      setTiles((prevTiles) => [...prevTiles, getRandomTile()]);
+    if (selectedSection && tiles.length < 6) {
+      setTiles((prevTiles) => [...prevTiles, getRandomTile(selectedSection)]);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="flex gap-4 mb-4">
+        {Object.keys(sections).map((section) => (
+          <Button
+            key={section}
+            onClick={() => {
+              setSelectedSection(section);
+              setTiles([]);
+            }}
+            className={`px-4 py-2 ${selectedSection === section ? "bg-blue-700" : "bg-blue-500 hover:bg-blue-600"}`}
+          >
+            {section}
+          </Button>
+        ))}
+      </div>
       <div className="flex gap-4 flex-wrap max-w-screen-md justify-center">
         {tiles.map((tile, index) => (
           <motion.div
@@ -31,7 +56,7 @@ export default function RandomTiles() {
       <Button
         onClick={drawTile}
         className="mt-6 bg-blue-500 hover:bg-blue-600"
-        disabled={tiles.length >= 6}
+        disabled={!selectedSection || tiles.length >= 6}
       >
         {tiles.length >= 6 ? "Limit Reached" : "Draw Tile"}
       </Button>
