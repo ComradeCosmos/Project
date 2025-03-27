@@ -21,16 +21,21 @@ export default function RandomTiles() {
   const [selectedSection, setSelectedSection] = useState(null);
   const [spinning, setSpinning] = useState(false);
   const [sectionSelected, setSectionSelected] = useState(false);
+  const [arrowRotation, setArrowRotation] = useState(0);
 
   const spinWheel = () => {
     setSpinning(true);
+    const spins = Math.floor(Math.random() * 4) + 3; // Ensures at least 3 full spins
+    const randomIndex = Math.floor(Math.random() * sectionNames.length);
+    const newRotation = 360 * spins + randomIndex * (360 / sectionNames.length);
+    
     setTimeout(() => {
-      const randomSection = sectionNames[Math.floor(Math.random() * sectionNames.length)];
-      setSelectedSection(randomSection);
+      setArrowRotation(newRotation % 360);
+      setSelectedSection(sectionNames[randomIndex]);
       setTiles([]);
       setSpinning(false);
       setSectionSelected(true);
-    }, 2000);
+    }, 3000);
   };
 
   const drawTile = () => {
@@ -44,19 +49,32 @@ export default function RandomTiles() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
-      <motion.div
-        className="w-32 h-32 flex items-center justify-center text-xl font-bold bg-blue-600 rounded-full shadow-lg mb-4"
-        animate={{ rotate: spinning ? 360 : 0 }}
-        transition={{ duration: 2, ease: "easeInOut" }}
-      >
-        {spinning ? "Spinning..." : selectedSection || "Spin Wheel"}
-      </motion.div>
+      <div className="relative w-48 h-48 flex items-center justify-center">
+        <div className="w-full h-full bg-blue-600 rounded-full flex items-center justify-center text-xl font-bold shadow-lg relative">
+          {sectionNames.map((section, index) => (
+            <div
+              key={index}
+              className="absolute w-full text-white font-bold text-center"
+              style={{ transform: `rotate(${index * (360 / sectionNames.length)}deg) translateY(-80px)` }}
+            >
+              {section}
+            </div>
+          ))}
+        </div>
+        <motion.div
+          className="absolute w-12 h-12 bg-red-500 rounded-full flex items-center justify-center"
+          animate={{ rotate: spinning ? arrowRotation : arrowRotation }}
+          transition={{ duration: 3, ease: "easeInOut" }}
+        >
+          <div className="w-0 h-0 border-l-8 border-r-8 border-b-[16px] border-transparent border-b-white"></div>
+        </motion.div>
+      </div>
       {!sectionSelected && (
-        <Button onClick={spinWheel} className="mb-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
+        <Button onClick={spinWheel} className="mt-4 bg-green-500 hover:bg-green-600" disabled={spinning}>
           {spinning ? "Spinning..." : "Spin to Select Section"}
         </Button>
       )}
-      <div className="flex gap-4 flex-wrap max-w-screen-md justify-center">
+      <div className="flex gap-4 flex-wrap max-w-screen-md justify-center mt-4">
         {tiles.map((tile, index) => (
           <motion.div
             key={index}
@@ -79,5 +97,3 @@ export default function RandomTiles() {
     </div>
   );
 }
-
-
