@@ -152,7 +152,7 @@ drivers = [
     {'name': 'Lando Norris', 'skill': 93, 'car': 89, 'history': 1.01},
     {'name': 'Oscar Piastri', 'skill': 91, 'car': 89, 'history': 1.00},
     {'name': 'Fernando Alonso', 'skill': 94, 'car': 88, 'history': 1.04},
-    {'name': 'Lance Stroll', 'skill': 50, 'car': 88, 'history': 0.10},
+    {'name': 'Lance Stroll', 'skill': 80, 'car': 88, 'history': 0.10},
     {'name': 'Pierre Gasly', 'skill': 90, 'car': 87, 'history': 0.99},
     {'name': 'Esteban Ocon', 'skill': 90, 'car': 87, 'history': 0.99},
     {'name': 'Yuki Tsunoda', 'skill': 88, 'car': 85, 'history': 0.97},
